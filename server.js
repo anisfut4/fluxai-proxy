@@ -164,6 +164,7 @@ const server = http.createServer((req, res) => {
     try { payload = JSON.parse(raw); }
     catch(e) { sendJSON(res, 400, { error: 'JSON invalide' }); return; }
 
+    console.log('RAW PROVIDER:', payload.provider, '| KEYS:', Object.keys(payload).join(','));
     const { prompt, imageUrl, image, size, quality, provider } = payload;
 
     if (!prompt) { sendJSON(res, 400, { error: 'prompt manquant' }); return; }
