@@ -184,7 +184,7 @@ const server = http.createServer((req, res) => {
 
       getImage.then(b64 => {
         console.log('Nano Banana Pro — image:', b64 ? Math.round(b64.length * 0.75 / 1024) + 'KB' : 'none');
-        return callNanoBanana(geminiKey, prompt, b64, 'image/png');
+        const geminiPrompt = prompt.replace(/^PHOTO EDITING TASK — NOT IMAGE GENERATION.s*/i, '').replace(/The product in the input image MUST remain pixel-perfect identical..*?Do NOT recreate or redesign the product.s*/gs, ''); return callNanoBanana(geminiKey, geminiPrompt, b64, 'image/png');
       }).then(result => {
         console.log('Gemini status:', result.status);
         res.writeHead(result.status, { ...CORS, 'Content-Type': 'application/json' });
