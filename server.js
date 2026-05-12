@@ -101,7 +101,7 @@ function callNanoBanana(geminiKey, prompt, imageBase64, imageMime) {
   const reqBody = JSON.stringify({
     contents,
     generationConfig: {
-      responseModalities: ['TEXT', 'IMAGE'], responseMimeType: 'image/jpeg',
+      responseModalities: ['TEXT', 'IMAGE'],
     }
   });
 
