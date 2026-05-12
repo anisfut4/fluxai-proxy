@@ -31,7 +31,7 @@ function fetchBuffer(url) {
   return new Promise((resolve, reject) => {
     const mod = url.startsWith('https') ? https : http;
     mod.get(url, { timeout: 30000 }, res => {
-      if (res.statusCode !== 200) { reject(new Error('Fetch failed: HTTP ' + res.statusCode)); return; }
+      if (res.statusCode !== 200) { console.error('Gemini error body:', raw.substring(0, 800)); reject(new Error('Fetch failed: HTTP ' + res.statusCode)); return; }
       const chunks = [];
       res.on('data', c => chunks.push(c));
       res.on('end', () => resolve(Buffer.concat(chunks)));
@@ -119,7 +119,7 @@ function callNanoBanana(geminiKey, prompt, imageBase64, imageMime) {
       res.on('data', c => chunks.push(c));
       res.on('end', () => {
         const raw = Buffer.concat(chunks).toString();
-        if (res.statusCode !== 200) {
+        if (res.statusCode !== 200) { console.error('Gemini error body:', raw.substring(0, 800));
           resolve({ status: res.statusCode, body: raw }); return;
         }
         // Extraire l'image base64 de la réponse Gemini
