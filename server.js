@@ -74,7 +74,7 @@ function callGPTImageEdit(auth, prompt, imageBuffer, size, quality) {
       res.on('end', () => resolve({ status: res.statusCode, body: Buffer.concat(chunks).toString() }));
     });
     req.on('error', reject);
-    req.setTimeout(180000, () => { req.destroy(); reject(new Error('GPT Image timeout 180s')); });
+    req.setTimeout(280000, () => { req.destroy(); reject(new Error('GPT Image timeout 180s')); });
     req.write(body); req.end();
   });
 }
@@ -142,7 +142,7 @@ function callNanoBanana(geminiKey, prompt, imageBase64, imageMime) {
       });
     });
     req.on('error', reject);
-    req.setTimeout(180000, () => { req.destroy(); reject(new Error('Nano Banana timeout 180s')); });
+    req.setTimeout(280000, () => { req.destroy(); reject(new Error('Nano Banana timeout 180s')); });
     req.write(reqBody); req.end();
   });
 }
@@ -224,7 +224,7 @@ const server = http.createServer((req, res) => {
   });
 });
 
-server.timeout = 240000;
+server.timeout = 300000;
 server.keepAliveTimeout = 120000;
 server.listen(PORT, '0.0.0.0', () => {
   console.log('✅ FluxAI Proxy v2 — port ' + PORT);
