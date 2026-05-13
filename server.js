@@ -105,7 +105,7 @@ function callNanoBanana(geminiKey, prompt, imageBase64, imageMime) {
     }
   });
 
-  const model = 'gemini-3.1-flash-image-preview';
+  const model = 'gemini-2.5-flash-image';
   const path = `/v1beta/models/${model}:generateContent?key=${geminiKey}`;
 
   return new Promise((resolve, reject) => {
