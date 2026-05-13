@@ -19,7 +19,7 @@ function sendJSON(res, status, data) {
 }
 
 function readBody(req) {
-  const attemptCall = (retries) => new Promise((resolve, reject) => {
+  return new Promise((resolve, reject) => {
     const chunks = [];
     req.on('data', c => chunks.push(c));
     req.on('end', () => resolve(Buffer.concat(chunks).toString('utf8')));
