@@ -19,7 +19,7 @@ function sendJSON(res, status, data) {
 }
 
 function readBody(req) {
-  return new Promise((resolve, reject) => {
+  const attemptCall = (retries) => new Promise((resolve, reject) => {
     const chunks = [];
     req.on('data', c => chunks.push(c));
     req.on('end', () => resolve(Buffer.concat(chunks).toString('utf8')));
@@ -105,7 +105,7 @@ function callNanoBanana(geminiKey, prompt, imageBase64, imageMime) {
     }
   });
 
-  const model = 'gemini-2.5-flash-image';
+  const model = 'gemini-3.1-flash-image-preview';
   const path = `/v1beta/models/${model}:generateContent?key=${geminiKey}`;
 
   return new Promise((resolve, reject) => {
@@ -145,6 +145,7 @@ function callNanoBanana(geminiKey, prompt, imageBase64, imageMime) {
     req.setTimeout(280000, () => { req.destroy(); reject(new Error('Nano Banana timeout 180s')); });
     req.write(reqBody); req.end();
   });
+  return attemptCall(2);
 }
 
 // ─── SERVER ──────────────────────────────────────────────────────────────────
